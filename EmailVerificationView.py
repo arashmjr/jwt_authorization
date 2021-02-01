@@ -84,16 +84,13 @@ class EmailVerificationView(FlaskView):
                                 }
             # prevent from store duplicate record
             user_profile = data_base.create_collection('user_profile')
-            items = []
-            for item in user_profile.find():
-                items.append(item)
-
-            for item in items:
-                if dict_register['email'] == item['email']:
-                    return {'success': False}
-
-            user_profile.insert_one(dict_register)
-            find_dict_user = user_profile.find_one({'email': dict_register['email']})
-            find_dict_user['_id'] = str(find_dict_user['_id'])  # value of '_id' convert to str without objectId
-            return jsonify(find_dict_user)
+            find_item = user_profile.find_one({'email': dict_register['email']})
+            # print(find_item)
+            if find_item is not None:
+                return {'success': False}
+            else:
+                user_profile.insert_one(dict_register)
+                find_dict_user = user_profile.find_one({'email': dict_register['email']})
+                find_dict_user['_id'] = str(find_dict_user['_id'])  # value of '_id' convert to str without objectId
+                return jsonify(find_dict_user)
 
