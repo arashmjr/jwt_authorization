@@ -1,4 +1,5 @@
-simple git Repository
+jwt_athorization
 -------------------------
 
-This Repository is for me learning how to use git.
+- Implemented login and verify sample API to authenticate user
+- Implemented API that decode token and authorise user's & sign up them
